@@ -105,8 +105,8 @@ Future<Jalali?> showPersianDatePicker({
   assert(!lastDate.isBefore(firstDate), 'lastDate $lastDate must be on or after firstDate $firstDate.');
   assert(!initialDate.isBefore(firstDate), 'initialDate $initialDate must be on or after firstDate $firstDate.');
   assert(!initialDate.isAfter(lastDate), 'initialDate $initialDate must be on or before lastDate $lastDate.');
-  assert(selectableDayPredicate == null || selectableDayPredicate(initialDate),
-      'Provided initialDate $initialDate must satisfy provided selectableDayPredicate.');
+  assert(
+      selectableDayPredicate == null || selectableDayPredicate(initialDate), 'Provided initialDate $initialDate must satisfy provided selectableDayPredicate.');
   assert(debugCheckHasMaterialLocalizations(context));
 
   Widget dialog = _DatePickerDialog(
@@ -174,12 +174,9 @@ class _DatePickerDialog extends StatefulWidget {
         firstDate = utils.dateOnly(firstDate),
         lastDate = utils.dateOnly(lastDate),
         super(key: key) {
-    assert(!this.lastDate.isBefore(this.firstDate),
-        'lastDate ${this.lastDate} must be on or after firstDate ${this.firstDate}.');
-    assert(!this.initialDate.isBefore(this.firstDate),
-        'initialDate ${this.initialDate} must be on or after firstDate ${this.firstDate}.');
-    assert(!this.initialDate.isAfter(this.lastDate),
-        'initialDate ${this.initialDate} must be on or before lastDate ${this.lastDate}.');
+    assert(!this.lastDate.isBefore(this.firstDate), 'lastDate ${this.lastDate} must be on or after firstDate ${this.firstDate}.');
+    assert(!this.initialDate.isBefore(this.firstDate), 'initialDate ${this.initialDate} must be on or after firstDate ${this.firstDate}.');
+    assert(!this.initialDate.isAfter(this.lastDate), 'initialDate ${this.initialDate} must be on or before lastDate ${this.lastDate}.');
     assert(selectableDayPredicate == null || selectableDayPredicate!(this.initialDate),
         'Provided initialDate ${this.initialDate} must satisfy provided selectableDayPredicate');
   }
@@ -263,7 +260,7 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
 
   void _handelEntryModeToggle() {
     setState(() {
-      switch (_entryMode) {
+      switch (_entryMode!) {
         case PDatePickerEntryMode.calendar:
           _autoValidate = false;
           _entryMode = PDatePickerEntryMode.input;
@@ -323,9 +320,8 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
         // TODO(darrenaustin): localize 'Date'
         : 'Date';
     final Color dateColor = colorScheme.brightness == Brightness.light ? colorScheme.onPrimary : colorScheme.onSurface;
-    final TextStyle? dateStyle = orientation == Orientation.landscape
-        ? textTheme.subtitle1?.copyWith(color: dateColor)
-        : textTheme.headline5?.copyWith(color: dateColor);
+    final TextStyle? dateStyle =
+        orientation == Orientation.landscape ? textTheme.titleMedium?.copyWith(color: dateColor) : textTheme.headlineSmall?.copyWith(color: dateColor);
 
     final Widget actions = ButtonBar(
       buttonTextTheme: ButtonTextTheme.primary,

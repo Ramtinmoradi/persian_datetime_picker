@@ -245,8 +245,7 @@ class _DateRangePickerDialogState extends State<_DateRangePickerDialog> {
   Jalali? _selectedEnd;
   late bool _autoValidate;
   final GlobalKey _calendarPickerKey = GlobalKey();
-  final GlobalKey<PInputDateRangePickerState> _inputPickerKey =
-      GlobalKey<PInputDateRangePickerState>();
+  final GlobalKey<PInputDateRangePickerState> _inputPickerKey = GlobalKey<PInputDateRangePickerState>();
 
   @override
   void initState() {
@@ -267,9 +266,7 @@ class _DateRangePickerDialogState extends State<_DateRangePickerDialog> {
         return;
       }
     }
-    final JalaliRange? selectedRange = _hasSelectedDateRange
-        ? JalaliRange(start: _selectedStart!, end: _selectedEnd!)
-        : null;
+    final JalaliRange? selectedRange = _hasSelectedDateRange ? JalaliRange(start: _selectedStart!, end: _selectedEnd!) : null;
 
     Navigator.pop(context, selectedRange);
   }
@@ -288,9 +285,7 @@ class _DateRangePickerDialogState extends State<_DateRangePickerDialog> {
 
         case PDatePickerEntryMode.input:
           // If invalid range (start after end), then just use the start date
-          if (_selectedStart != null &&
-              _selectedEnd != null &&
-              _selectedStart!.isAfter(_selectedEnd!)) {
+          if (_selectedStart != null && _selectedEnd != null && _selectedStart!.isAfter(_selectedEnd!)) {
             _selectedEnd = null;
           }
           _entryMode = PDatePickerEntryMode.calendar;
@@ -309,8 +304,7 @@ class _DateRangePickerDialogState extends State<_DateRangePickerDialog> {
     setState(() => _selectedEnd = date);
   }
 
-  bool get _hasSelectedDateRange =>
-      _selectedStart != null && _selectedEnd != null;
+  bool get _hasSelectedDateRange => _selectedStart != null && _selectedEnd != null;
 
   @override
   Widget build(BuildContext context) {
@@ -343,8 +337,7 @@ class _DateRangePickerDialogState extends State<_DateRangePickerDialog> {
         );
         size = mediaQuery.size;
         insetPadding = const EdgeInsets.all(0.0);
-        shape = const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.zero));
+        shape = const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero));
         elevation = 0;
         break;
 
@@ -355,9 +348,7 @@ class _DateRangePickerDialogState extends State<_DateRangePickerDialog> {
           currentDate: widget.currentDate,
           picker: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            height: orientation == Orientation.portrait
-                ? _inputFormPortraitHeight
-                : _inputFormLandscapeHeight,
+            height: orientation == Orientation.portrait ? _inputFormPortraitHeight : _inputFormLandscapeHeight,
             child: Column(
               children: <Widget>[
                 const Spacer(),
@@ -392,11 +383,8 @@ class _DateRangePickerDialogState extends State<_DateRangePickerDialog> {
           helpText: widget.helpText ?? 'انتخاب تاریخ',
         );
         final DialogTheme dialogTheme = Theme.of(context).dialogTheme;
-        size = orientation == Orientation.portrait
-            ? _inputPortraitDialogSize
-            : _inputLandscapeDialogSize;
-        insetPadding =
-            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0);
+        size = orientation == Orientation.portrait ? _inputPortraitDialogSize : _inputLandscapeDialogSize;
+        insetPadding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0);
         shape = dialogTheme.shape;
         elevation = dialogTheme.elevation ?? 24;
         break;
@@ -466,29 +454,17 @@ class _CalendarRangePickerDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
+    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
     final Orientation orientation = MediaQuery.of(context).orientation;
     final TextTheme textTheme = theme.textTheme;
-    final Color headerForeground = colorScheme.brightness == Brightness.light
-        ? colorScheme.onPrimary
-        : colorScheme.onSurface;
+    final Color headerForeground = colorScheme.brightness == Brightness.light ? colorScheme.onPrimary : colorScheme.onSurface;
     final Color headerDisabledForeground = headerForeground.withOpacity(0.38);
-    final String startDateText = utils.formatRangeStartDate(
-        localizations, selectedStartDate, selectedEndDate);
-    final String endDateText = utils.formatRangeEndDate(
-        localizations, selectedStartDate, selectedEndDate, Jalali.now());
-    final TextStyle? headlineStyle = textTheme.headline6;
-    final TextStyle? startDateStyle = headlineStyle?.apply(
-        color: selectedStartDate != null
-            ? headerForeground
-            : headerDisabledForeground);
-    final TextStyle? endDateStyle = headlineStyle?.apply(
-        color: selectedEndDate != null
-            ? headerForeground
-            : headerDisabledForeground);
-    final TextStyle saveButtonStyle = textTheme.button!.apply(
-        color: onConfirm != null ? headerForeground : headerDisabledForeground);
+    final String startDateText = utils.formatRangeStartDate(localizations, selectedStartDate, selectedEndDate);
+    final String endDateText = utils.formatRangeEndDate(localizations, selectedStartDate, selectedEndDate, Jalali.now());
+    final TextStyle? headlineStyle = textTheme.titleLarge;
+    final TextStyle? startDateStyle = headlineStyle?.apply(color: selectedStartDate != null ? headerForeground : headerDisabledForeground);
+    final TextStyle? endDateStyle = headlineStyle?.apply(color: selectedEndDate != null ? headerForeground : headerDisabledForeground);
+    final TextStyle saveButtonStyle = textTheme.labelLarge!.apply(color: onConfirm != null ? headerForeground : headerDisabledForeground);
 
     final IconButton entryModeIcon = IconButton(
       padding: EdgeInsets.zero,
@@ -521,8 +497,7 @@ class _CalendarRangePickerDialog extends StatelessWidget {
           bottom: PreferredSize(
             preferredSize: const Size(double.infinity, 64),
             child: Row(children: <Widget>[
-              SizedBox(
-                  width: MediaQuery.of(context).size.width < 360 ? 42 : 72),
+              SizedBox(width: MediaQuery.of(context).size.width < 360 ? 42 : 72),
               Expanded(
                 child: Semantics(
                   label: '$helpText $startDateText to $endDateText',
@@ -532,7 +507,7 @@ class _CalendarRangePickerDialog extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         helpText,
-                        style: textTheme.overline!.apply(
+                        style: textTheme.labelSmall!.apply(
                           color: headerForeground,
                         ),
                       ),
@@ -612,14 +587,10 @@ class _PInputDateRangePickerDialog extends StatelessWidget {
   final String cancelText;
   final String helpText;
 
-  String _formatDateRange(
-      BuildContext context, Jalali? start, Jalali? end, Jalali? now) {
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-    final String startText =
-        utils.formatRangeStartDate(localizations, start, end);
-    final String endText =
-        utils.formatRangeEndDate(localizations, start, end, now);
+  String _formatDateRange(BuildContext context, Jalali? start, Jalali? end, Jalali? now) {
+    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    final String startText = utils.formatRangeStartDate(localizations, start, end);
+    final String endText = utils.formatRangeEndDate(localizations, start, end, now);
     if (start == null || end == null) {
       return localizations.unspecifiedDateRange;
     }
@@ -637,18 +608,12 @@ class _PInputDateRangePickerDialog extends StatelessWidget {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final TextTheme textTheme = theme.textTheme;
 
-    final Color dateColor = colorScheme.brightness == Brightness.light
-        ? colorScheme.onPrimary
-        : colorScheme.onSurface;
-    final TextStyle? dateStyle = orientation == Orientation.landscape
-        ? textTheme.subtitle1?.apply(color: dateColor)
-        : textTheme.headline5?.apply(color: dateColor);
-    final String dateText = _formatDateRange(
-        context, selectedStartDate, selectedEndDate, currentDate);
-    final String semanticDateText = selectedStartDate != null &&
-            selectedEndDate != null
-        ? '${selectedStartDate!.formatMediumDate()} – ${selectedEndDate!.formatMediumDate()}'
-        : '';
+    final Color dateColor = colorScheme.brightness == Brightness.light ? colorScheme.onPrimary : colorScheme.onSurface;
+    final TextStyle? dateStyle =
+        orientation == Orientation.landscape ? textTheme.titleMedium?.apply(color: dateColor) : textTheme.headlineSmall?.apply(color: dateColor);
+    final String dateText = _formatDateRange(context, selectedStartDate, selectedEndDate, currentDate);
+    final String semanticDateText =
+        selectedStartDate != null && selectedEndDate != null ? '${selectedStartDate!.formatMediumDate()} – ${selectedEndDate!.formatMediumDate()}' : '';
 
     final Widget header = PDatePickerHeader(
       helpText: helpText,

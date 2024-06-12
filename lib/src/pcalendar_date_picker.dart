@@ -4,12 +4,11 @@
 
 import 'dart:math' as math;
 
-import './pdate_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:persian_datetime_picker/src/date/shamsi_date.dart';
 
+import './pdate_utils.dart';
 import 'pdate_picker_common.dart';
 import 'pdate_utils.dart' as utils;
 
@@ -83,12 +82,9 @@ class PCalendarDatePicker extends StatefulWidget {
         firstDate = utils.dateOnly(firstDate),
         lastDate = utils.dateOnly(lastDate),
         super(key: key) {
-    assert(!this.lastDate.isBefore(this.firstDate),
-        'lastDate ${this.lastDate} must be on or after firstDate ${this.firstDate}.');
-    assert(!this.initialDate.isBefore(this.firstDate),
-        'initialDate ${this.initialDate} must be on or after firstDate ${this.firstDate}.');
-    assert(!this.initialDate.isAfter(this.lastDate),
-        'initialDate ${this.initialDate} must be on or before lastDate ${this.lastDate}.');
+    assert(!this.lastDate.isBefore(this.firstDate), 'lastDate ${this.lastDate} must be on or after firstDate ${this.firstDate}.');
+    assert(!this.initialDate.isBefore(this.firstDate), 'initialDate ${this.initialDate} must be on or after firstDate ${this.firstDate}.');
+    assert(!this.initialDate.isAfter(this.lastDate), 'initialDate ${this.initialDate} must be on or before lastDate ${this.lastDate}.');
     assert(selectableDayPredicate == null || selectableDayPredicate!(this.initialDate),
         'Provided initialDate ${this.initialDate} must satisfy provided selectableDayPredicate.');
   }
@@ -362,7 +358,7 @@ class _DatePickerModeToggleButtonState extends State<_DatePickerModeToggleButton
       child: Text(
         title,
         overflow: TextOverflow.ellipsis,
-        style: textTheme.subtitle2?.copyWith(
+        style: textTheme.titleSmall?.copyWith(
           color: controlColor,
         ),
       ),
@@ -613,7 +609,7 @@ class _DayPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final TextStyle? dayStyle = textTheme.caption;
+    final TextStyle? dayStyle = textTheme.bodySmall;
     final Color enabledDayColor = colorScheme.onSurface.withOpacity(0.87);
     final Color disabledDayColor = colorScheme.onSurface.withOpacity(0.38);
     final Color selectedDayColor = colorScheme.onPrimary;
@@ -636,9 +632,8 @@ class _DayPicker extends StatelessWidget {
         dayItems.add(Container());
       } else {
         final Jalali dayToBuild = Jalali(year, month, day);
-        final bool isDisabled = dayToBuild.isAfter(lastDate) ||
-            dayToBuild.isBefore(firstDate) ||
-            (selectableDayPredicate != null && !selectableDayPredicate!(dayToBuild));
+        final bool isDisabled =
+            dayToBuild.isAfter(lastDate) || dayToBuild.isBefore(firstDate) || (selectableDayPredicate != null && !selectableDayPredicate!(dayToBuild));
 
         BoxDecoration? decoration;
         Color dayColor = enabledDayColor;
@@ -773,7 +768,7 @@ class _DayHeaders extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
-    final TextStyle? dayHeaderStyle = theme.textTheme.caption?.apply(
+    final TextStyle? dayHeaderStyle = theme.textTheme.bodySmall?.apply(
       color: colorScheme.onSurface.withOpacity(0.60),
     );
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
@@ -880,7 +875,7 @@ class _YearPickerState extends State<_YearPicker> {
     } else {
       textColor = colorScheme.onSurface.withOpacity(0.87);
     }
-    final TextStyle? itemStyle = textTheme.bodyText1?.apply(color: textColor);
+    final TextStyle? itemStyle = textTheme.bodyLarge?.apply(color: textColor);
 
     BoxDecoration? decoration;
     if (isSelected) {
@@ -962,12 +957,7 @@ class _YearPickerState extends State<_YearPicker> {
 }
 
 class _MonthsSelecting extends StatelessWidget {
-  const _MonthsSelecting(
-      {required this.currentDate,
-      this.currentDisplayedDate,
-      required this.selectedDate,
-      required this.onChanged,
-      Key? key})
+  const _MonthsSelecting({required this.currentDate, this.currentDisplayedDate, required this.selectedDate, required this.onChanged, Key? key})
       : super(key: key);
 
   /// The current date.
@@ -1022,7 +1012,7 @@ class _MonthsSelecting extends StatelessWidget {
     } else {
       textColor = colorScheme.onSurface.withOpacity(0.87);
     }
-    final TextStyle? itemStyle = textTheme.bodyText1?.apply(color: textColor);
+    final TextStyle? itemStyle = textTheme.bodyLarge?.apply(color: textColor);
 
     BoxDecoration? decoration;
     if (isSelected) {
@@ -1081,8 +1071,7 @@ class _YearPickerGridDelegate extends SliverGridDelegate {
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    final double tileWidth =
-        (constraints.crossAxisExtent - (_yearPickerColumnCount - 1) * _yearPickerRowSpacing) / _yearPickerColumnCount;
+    final double tileWidth = (constraints.crossAxisExtent - (_yearPickerColumnCount - 1) * _yearPickerRowSpacing) / _yearPickerColumnCount;
     return SliverGridRegularTileLayout(
       childCrossAxisExtent: tileWidth,
       childMainAxisExtent: _yearPickerRowHeight,
